@@ -3,6 +3,32 @@
 }
 
 .navbarStyle {
-  padding: .5rem 1rem !important
+  padding: .5rem 1rem ;
+  color: blueviolet;
 }
 
+.service_link {
+  color: white;
+  font-weight: bold;
+  background-color: #6699cc;
+  border: 2px outset;
+  border-top-color: #aaccff;
+  border-left-color: #aaccff;
+  border-right-color: #003366;
+  border-bottom-color: #003366;
+  width: 20%;
+  height: 20%;
+}
+
+.logo_link {
+  color: white;
+  font-weight: bold;
+  background-color: #6699cc;
+  border: 2px outset;
+  border-top-color: #aaccff;
+  border-left-color: #aaccff;
+  border-right-color: #003366;
+  border-bottom-color: #003366;
+  width: 40%;
+  height: 40%;
+}

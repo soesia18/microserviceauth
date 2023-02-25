@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Kaindorf Portal React App",
+  "name": "Create React App - Kaindorf Portal - Authentication & Authorization ",
   "icons": [
     {
       "src": "favicon.svg",
