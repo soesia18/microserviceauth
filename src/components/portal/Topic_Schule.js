@@ -8,10 +8,16 @@ const Topic_Schule = () => (
               <img src="./images/ServiceBibliothekAusleihe.png" class="service_link" alt="Bibliothek Ausleihe"></img>
           </a>
 
+
+      <button onClick={getData}>Push me hard</button>
       <h2>Seite in Arbeit</h2>
-      <p>Hier werden noch weitere Schul Services stehen</p>
+      <p>Max und Michi waren hier</p>
   </div>
 );
 
+async function getData() {
+    let data = await fetch("http://localhost:8022", {headers : {"authorization": "max"}});
+    alert(await data.text());
+}
 
 export default Topic_Schule;

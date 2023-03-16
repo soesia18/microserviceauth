@@ -65,9 +65,9 @@ const ServiceContent = () => {
     return (
         <>
             <h2 className="card-title">Welcome to Kaindorf Portal</h2>
-            <span>{RequestProfileData()}</span>
+            <span>{RequestProfileData}</span>
             {graphData ? (
-                <span>{AccessServiceData()}</span>
+                <span>{AccessServiceData}</span>
                 ) : (
                 <Button variant="secondary" onClick={RequestProfileData}>
                 Request Authentification Information
