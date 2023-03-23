@@ -35,11 +35,8 @@ app.get('*', (req, res) => {
         const API_ENDPOINT = 'https://www.themealdb.com/api/json/v1/1/categories.php';
 
         fetch(API_ENDPOINT)
-            .then(response => response.json())
-            .then(data => {
-                // Process the data returned from the API
-                console.log(data);
-                res.send(data);
+            .then(response => {
+                res.send(response);
             })
             .catch(error => {
                 // Handle any errors that occur during the request

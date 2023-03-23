@@ -9,15 +9,28 @@ const Topic_Schule = () => (
           </a>
 
 
-      <button onClick={getData}>Push me hard</button>
+      <button onClick={getData}>Get Food</button>
       <h2>Seite in Arbeit</h2>
       <p>Max und Michi waren hier</p>
+      <div id="food"></div>
   </div>
 );
 
 async function getData() {
     let data = await fetch("http://localhost:8022", {headers : {"authorization": "max"}});
-    alert(await data.text());
+    console.log("getData: ");
+    console.log(data);
+    document.getElementById('food').innerHTML = "";
+    data.json().then(categorie => {
+        console.log(categorie);
+        categorie.categories.forEach(category => {
+            const p = document.createElement('p');
+            p.innerHTML = category.strCategory;
+            document.getElementById('food').appendChild(p);
+        })
+    })
+
+    //alert(await data.text());
 }
 
 export default Topic_Schule;
