@@ -11,7 +11,7 @@ const app = express();
 // Initialize variables.
 let port = DEFAULT_PORT;
 
-let tokens = ["max"];
+let tokens = ["test123"];
 
 // Setup app folders.
 app.use(express.static('app'));
@@ -36,6 +36,15 @@ app.get('*', (req, res) => {
     }
 });
 
+//ToDo fix body() not a function 
+//Login
+app.post("/login", (req, res) => {
+    req.body((data) => {
+        console.log(data.username);
+        console.log(data.password);
+    });
+    res.json({token: "test123", username: data.username, password: data.password});
+});
 
 
 // Start the server.
