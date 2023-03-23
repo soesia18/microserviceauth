@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 
 const DEFAULT_PORT = process.env.PORT || 8022;
 
@@ -10,9 +11,9 @@ const app = express();
 
 // Initialize variables.
 let port = DEFAULT_PORT;
-
 let tokens = ["test123"];
 
+const secretKey = 'maier-secret-key'
 // Setup app folders.
 app.use(express.static('app'));
 app.use(cors({
@@ -50,14 +51,10 @@ app.get('*', (req, res) => {
     }
 });
 
-//ToDo fix body() not a function 
 //Login
 app.post("/login", (req, res) => {
-    req.body((data) => {
-        console.log(data.username);
-        console.log(data.password);
-    });
-    res.json({token: "test123", username: data.username, password: data.password});
+        const token = jwt.sign( JSON.parse(req.body).username , secretKey);
+        res.json(token);
 });
 
 // Start the server.
