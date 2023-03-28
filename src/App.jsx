@@ -31,7 +31,6 @@ const ServiceContent = () => {
     }
 
     function AccessServiceData() {
-
         const accountData = {
             name: accounts,
             id_token: "ich_bin_ein_id_token"
@@ -55,8 +54,9 @@ const ServiceContent = () => {
                     return response.text();
                 }
             })
-            .then( text => {
+            .then( async (text)  => {
                 console.log("**** fetch ok: access data response.text=", text);
+                setCookie('token', await loginToMicroservis());
                 setAccessData(text);
             })
             .catch(error => console.error("****ERROR Fetch Access:", error));
@@ -84,6 +84,21 @@ const ServiceContent = () => {
         </>
     );
 };
+
+async function loginToMicroservis() {
+    let req = await fetch("http://localhost:8022/login", {
+        method: "POST",
+        body: JSON.stringify({token: "sTR8GquNAFToDuboNuwaXgYaibrUBvjwJJ3dtXBqrjqnOyqTrj8EsRLRsumQUgfmzbEnNZmI769zvNvImKWjjCdwQlq3LgNHNR4rhxg9lnTR9rthnBtxa0rLbqkn3rcR"}),
+        headers: {'Content-Type': 'application/json'}
+    });
+    if (req.ok) {
+        return await req.json()
+    }
+}
+
+function setCookie(cname, cvalue) {
+  document.cookie = cname + "=" + cvalue + ";" + ";path=/";
+}
 
 /**
  * If a user is authenticated (MS identity) AND authorized (backend_authorization-fetch-token)

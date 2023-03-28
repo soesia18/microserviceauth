@@ -17,12 +17,11 @@ const Topic_Schule = () => (
 );
 
 async function getData() {
-    let user = await loginToMicroservis();
+    let token = getCookie('token');
 
-    if(user != null) {
-        let data = await fetch("http://localhost:8022", {headers : {"authorization": "max"}});
-        console.log("getData: ");
-        console.log(data);
+    if(token != null) {
+        console.log(token);
+        let data = await fetch("http://localhost:8022", {headers : {"authorization": token}});
         document.getElementById('food').innerHTML = "";
         data.json().then(categorie => {
             console.log(categorie);
@@ -39,14 +38,20 @@ async function getData() {
     //alert(await data.text());
 }
 
-export async function loginToMicroservis() {
-    let req = await fetch("http://localhost:8022/login", {
-        method: "POST",
-        body: JSON.stringify({username: "lostnumber", pasword: 123})
-    });
-    if (req.ok) {
-        return await req.json()
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
     }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
 
 export default Topic_Schule;

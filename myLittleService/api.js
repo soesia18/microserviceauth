@@ -11,7 +11,6 @@ const app = express();
 
 // Initialize variables.
 let port = DEFAULT_PORT;
-let tokens = ["test123"];
 
 const secretKey = 'maier-secret-key'
 // Setup app folders.
@@ -30,28 +29,40 @@ app.use(express.text());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Set up a route for index_ori.html
-app.get('*', (req, res) => {
-    if (tokens.includes(req.headers.authorization)) {
+app.get('*', (req, res) =>  {
+    const token = req.headers.authorization;
+    if (!token) {
+        console.log('header');
+        return res.status(401).send('Unauthorized');
+    }
+
+    try {
+        // Verify the JWT using the secret key
+        const payload = jwt.verify(token, secretKey);
 
         const API_ENDPOINT = 'https://www.themealdb.com/api/json/v1/1/categories.php';
 
         fetch(API_ENDPOINT)
-            .then(response => {
-                res.send(response);
+            .then(async response => {
+                let data = await response.json();
+                res.send(data);
             })
             .catch(error => {
                 // Handle any errors that occur during the request
                 console.error(error);
             });
-    } else {
-        res.status(417).send();
-    }
+    } catch (err) {
+        console.log(err);
+        return res.status(401).send('Unauthorized');
+    }   
 });
 
 //Login
 app.post("/login", (req, res) => {
-        const token = jwt.sign( JSON.parse(req.body).username , secretKey);
+    if(req.body.token == 'sTR8GquNAFToDuboNuwaXgYaibrUBvjwJJ3dtXBqrjqnOyqTrj8EsRLRsumQUgfmzbEnNZmI769zvNvImKWjjCdwQlq3LgNHNR4rhxg9lnTR9rthnBtxa0rLbqkn3rcR') {
+        const token = jwt.sign(req.body.token, secretKey);
         res.json(token);
+    }
 });
 
 // Start the server.
